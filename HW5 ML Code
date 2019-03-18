@@ -1,0 +1,27 @@
+(* 1. *)
+
+fun sumAll([]) = 0
+    | sumAll(x :: xs) = x + sumAll(xs);
+
+(* 2. *)
+
+datatype E = NUM of int | PLUS of E * E | TIMES of E * E;
+
+fun interp(NUM x) = x
+    | interp(PLUS(x,y)) = interp(x) + interp(y)
+    | interp(TIMES(x, y)) = interp(x) * interp(y);
+
+(* 3. *)
+
+datatype tree = NIL | CONS of (tree * tree) | LEAF of int;
+
+fun square(x) = x*x;
+
+fun treemap f NIL = NIL
+    | treemap f (LEAF x) = LEAF (f(x))
+    | treemap f (CONS (x, y)) = CONS ((treemap f x), (treemap f y));
+
+Control.Print.printDepth := 100;
+val L = CONS (CONS (LEAF 1, LEAF 2), CONS (CONS (LEAF 3, LEAF 4), LEAF 5));
+
+treemap square L
